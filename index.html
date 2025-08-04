@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Exclusive Listings | Lee & Associates</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Include Tailwind via CDN for modern, responsive styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+ <header class="site-header stacked-header">
+  <img src="assets/logo.png" alt="Lee & Associates Logo" class="site-logo" />
+  <h1>Exclusive Listings</h1>
+  </header>
+  <!-- Controls: search bar and export buttons -->
+  <div class="table-controls-flex">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search listings…"
+      class="search-bar"
+      autocomplete="off"
+    />
+    <div class="flex gap-2">
+      <button id="csvExportBtn" class="filter-btn">Export CSV</button>
+      <button id="pdfExportBtn" class="filter-btn">Export PDF</button>
+    </div>
+  </div>
+  <!-- Filter buttons -->
+  <div class="filter-buttons" style="display: flex; justify-content: flex-end; margin-bottom: 12px; gap: 10px;">
+    <button class="filter-btn" data-type="">All</button>
+    <button class="filter-btn" data-type="3">Industrial</button>
+    <button class="filter-btn" data-type="2">Retail</button>
+    <button class="filter-btn" data-type="1">Office</button>
+    <button class="filter-btn" data-type="5">Land</button>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th class="sortable" data-sort="location">Property</th>
+        <th class="sortable" data-sort="size">Size</th>
+        <th class="sortable" data-sort="brokers">Brokers</th>
+        <th class="sortable" data-sort="type">Type</th>
+      </tr>
+    </thead>
+    <tbody id="listing-body"></tbody>
+  </table>
+  <script src="script.js"></script>
+</body>
+</html>
