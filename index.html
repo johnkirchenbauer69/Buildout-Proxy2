@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,48 +6,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Exclusive Listings | Lee & Associates</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <!-- Include Tailwind via CDN for modern, responsive styling -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
- <header class="site-header stacked-header">
-  <img src="assets/logo.png" alt="Lee & Associates Logo" class="site-logo" />
-  <h1>Exclusive Listings</h1>
+<!-- Top progress bar -->
+<div id="topProgress" class="top-progress" hidden>
+  <div class="top-progress__bar"></div>
+</div>
+<!-- Loading overlay -->
+<div id="loading" class="loading-overlay" aria-live="polite" aria-busy="true" hidden>
+  <div class="loading-card">
+    <div class="spinner" role="progressbar" aria-label="Loading listings"></div>
+    <p class="loading-text">Loading listings…</p>
+  </div>
+</div>
+  <!-- ===== SVG SPRITE: place once, anywhere in the page ===== -->
+  <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+    <defs>
+      <symbol id="ico-height" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M11 3h2v18h-2V3Zm-3.5 3.5L12 2l4.5 4.5-1.4 1.4L13 5.8V18.2l2.1-2.1 1.4 1.4L12 22l-4.5-4.5 1.4-1.4L11 18.2V5.8L7.9 7.9 7.5 6.5Z"/>
+      </symbol>
+      <symbol id="ico-dock" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M3 4h18v4H3V4Zm2 6h14v9h-3v-5H8v5H5v-9Zm5 0v2h4v-2h-4Z"/>
+      </symbol>
+      <symbol id="ico-drivein" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M4 18V7l4-3h8l4 3v11h-2v-9h-3v9h-2v-9H9v9H7v-9H4v9H4Z"/>
+      </symbol>
+      <symbol id="ico-year" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M7 3h2v2h6V3h2v2h3v16H4V5h3V3Zm-1 6h12V7H6v2Z"/>
+      </symbol>
+      <symbol id="ico-zoning" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M3 3h8v8H3V3Zm10 0h8v8h-8V3ZM3 13h8v8H3v-8Zm10 0h8v8h-8v-8Z"/>
+      </symbol>
+    </defs>
+  </svg>
+  <!-- ===== end sprite ===== -->
+
+  <header class="site-header stacked-header">
+    <img src="assets/logo.png" alt="Lee & Associates Logo" class="site-logo" />
+    <h1>Exclusive Listings</h1>
   </header>
-  <!-- Controls: search bar and export buttons -->
+
   <div class="table-controls-flex">
     <input
       type="text"
       id="searchInput"
-      placeholder="Search listings…"
+      placeholder="Search listings..."
       class="search-bar"
       autocomplete="off"
     />
-    <div class="flex gap-2">
-      <button id="csvExportBtn" class="filter-btn">Export CSV</button>
-      <button id="pdfExportBtn" class="filter-btn">Export PDF</button>
-    </div>
   </div>
-  <!-- Filter buttons -->
-  <div class="filter-buttons" style="display: flex; justify-content: flex-end; margin-bottom: 12px; gap: 10px;">
-    <button class="filter-btn" data-type="">All</button>
-    <button class="filter-btn" data-type="3">Industrial</button>
-    <button class="filter-btn" data-type="2">Retail</button>
-    <button class="filter-btn" data-type="1">Office</button>
-    <button class="filter-btn" data-type="5">Land</button>
-  </div>
-  <table>
+
+  <!-- Filter buttons should live OUTSIDE the table -->
+<div class="filter-buttons" style="display:flex;justify-content:flex-end;margin-bottom:12px;gap:10px;flex-wrap:wrap;align-items:center;">
+  <button class="filter-btn" data-type="">All</button>
+  <button class="filter-btn" data-type="3">Industrial</button>
+  <button class="filter-btn" data-type="2">Retail</button>
+  <button class="filter-btn" data-type="1">Office</button>
+  <button class="filter-btn" data-type="5">Land</button>
+
+  <!-- Listing Type dropdown -->
+  <label class="select-wrap" aria-label="Listing Type">
+    <select id="listingTypeSelect" class="select-control">
+      <option value="">All Listing Types</option>
+      <option value="lease">For Lease</option>
+      <option value="sale">For Sale</option>
+      <option value="both">For Sale & Lease</option>
+    </select>
+  </label>
+</div>
+
+
+  <table class="listing-table table-header-lee-red">
     <thead>
       <tr>
-        <th class="sortable" data-sort="location">Property</th>
-        <th class="sortable" data-sort="size">Size</th>
-        <th class="sortable" data-sort="brokers">Brokers</th>
-        <th class="sortable" data-sort="type">Type</th>
+        <th class="sortable" data-sort="location">Property <span class="sort-caret" aria-hidden="true"></span></th>
+        <th class="sortable" data-sort="city">City <span class="sort-caret" aria-hidden="true"></span></th>
+        <th class="sortable" data-sort="size">Size <span class="sort-caret" aria-hidden="true"></span></th>
+        <th class="sortable" data-sort="brokers">Brokers <span class="sort-caret" aria-hidden="true"></span></th>
+        <th class="sortable" data-sort="type">Type <span class="sort-caret" aria-hidden="true"></span></th>        
       </tr>
     </thead>
     <tbody id="listing-body"></tbody>
   </table>
+
   <script src="script.js"></script>
 </body>
 </html>
